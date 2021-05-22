@@ -1,0 +1,48 @@
+button {
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  background: none;
+  text-transform: lowercase;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+
+  &:focus, 
+  &:active,
+  &:hover {
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }  
+}
+
+*:focus,
+*:active {
+  -webkit-tap-highlight-color: transparent;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+
+.c-btn {
+  @include font-serif;
+
+  font-size: 28px;
+  line-height: 1.15;
+  display: flex;
+  justify-content: center;
+}
+
+.c-btn-link {
+  @include font-sans-mini;
+}
+
+.c-btn-arrow--right {
+  transform: rotate(180deg);
+}
+
+.c-btn-dots {
+  letter-spacing: 8px;
+}

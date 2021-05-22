@@ -1,0 +1,68 @@
+.c-confirm__content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 20px);
+}
+
+.c-confirm__top {
+  flex: 1;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px var(--app-margin) 15px;
+}
+
+.c-confirm__heading {
+  @include font-sans-mini;
+
+  color: var(--c-app-text-secondary);
+  padding: 20px 0 0;
+  font-size: 14px;
+}
+
+.c-confirm__element {
+  @include font-sans-mini;
+
+  padding: 20px 0 40px;
+  font-size: 24px;
+}
+
+.c-confirm__action {
+  color: var(--c-app-text-secondary);
+  padding: 0 var(--app-margin);
+  text-align: center;
+  max-width: 260px;
+  font-size: 18px;
+  margin: auto;
+}
+
+.c-confirm__buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding-top: 20px;
+  margin-bottom: -20px;
+  height: 175px;
+  overflow: hidden;
+}
+
+.c-confirm__btn:nth-child(1) {
+  margin-top: 20px;
+  height: 125px;
+  width: 125px;
+  border-radius: 100px;
+  border: 1px solid var(--c-app-border);
+  padding: 10px;
+}
+
+.c-confirm__btn:nth-child(2) {
+  height: 175px;
+  width: 175px;
+  border-radius: 160px;
+  background-color: var(--c-app-background-secondary);
+  padding: 20px;
+  font-size: 16px;
+}

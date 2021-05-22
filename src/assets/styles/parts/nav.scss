@@ -1,0 +1,139 @@
+.c-nav {
+  margin-left: var(--app-margin);
+  width: calc(100% - var(--app-margin));
+  padding-right: var(--app-margin);
+  justify-content: space-between;
+  background-color: var(--c-app-background-primary);
+  height: var(--nav-height);
+  align-items: center;
+  padding-bottom: 4px;
+  position: fixed;
+  display: flex;
+  z-index: 100;
+  bottom: 0;
+
+  &:before {
+    @include pseudo;
+
+    border-top: 1px solid var(--c-app-border);
+    z-index: 100;
+    width: 100%;
+    top: 0;
+  }
+}
+
+.c-nav-item {
+  justify-content: center;
+  display: flex;
+  flex: 1 1 0px;
+
+  &:first-child {
+    justify-content: flex-start;
+  }
+
+  &:last-child:not(:first-child) {
+    justify-content: flex-end;
+  }
+
+  .c-btn-arrow {
+    img {
+      margin-top: 6px;
+    }
+  }
+}
+
+.c-nav-item__link {
+  cursor: pointer;
+
+  .c-btn-arrow {
+    img {
+      margin-top: 4px;
+      margin-bottom: 0;
+    }
+  }
+
+  .c-btn-arrow--right {
+    img {
+      margin-top: 0;
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.c-nav-burger {
+  position: relative;
+  height: 18px;
+  width: 28px;
+
+  .c-nav-burger__line {
+    background-color: var(--c-app-border);
+    position: absolute;
+    height: 1px;
+    width: 20px;
+    top: 0;
+
+    &:last-child {
+      width: 28px;
+      top: auto;
+      bottom: 0;
+    }
+  }
+}
+
+.c-view--nav-last-white {
+  .c-main,
+  .c-nav {
+    &:after {
+      @include pseudo;
+
+      background-color: var(--c-app-background-secondary);
+      border-radius: 180px;
+      bottom: -60px;
+      right: -35px;
+      height: 180px;
+      width: 180px;
+      z-index: -1;
+    }
+  }
+
+  .c-main {
+    &:after {
+      position: fixed;
+    }
+  }
+
+  .c-nav {
+    overflow: hidden;
+  }
+}
+
+.c-view--nav-first-white {
+  .c-main,
+  .c-nav {
+    &:after {
+      @include pseudo;
+
+      background-color: var(--c-app-background-secondary);
+      border-radius: 180px;
+      bottom: -60px;
+      left: -55px;
+      height: 180px;
+      width: 180px;
+      z-index: -1;
+    }
+  }
+
+  .c-main {
+    &:after {
+      position: fixed;
+    }
+  }
+
+  .c-nav {
+    overflow: hidden;
+
+    &:after {
+      margin-left: calc(-1 * var(--app-margin));
+    }
+  }
+}

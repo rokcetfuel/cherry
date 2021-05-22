@@ -1,0 +1,76 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body, .c-app {
+  height: 100%;
+}
+
+body {
+  @include font-sans;
+
+  background: var(--c-app-background-primary);
+  line-height: 1.25;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: var(--c-app-text-primary);
+}
+
+/**
+ * Layout
+ */
+.c-header {
+  padding-right: var(--app-margin);
+  padding-left: var(--app-margin);
+}
+
+.c-header:not(.c-header--custom) {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.c-header-logo {
+  @include font-special;
+
+  font-size: 64px;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.c-header-name {
+  @include font-serif;
+
+  font-size: 40px;
+  line-height: 1.15;
+  text-transform: lowercase;
+}
+
+.c-header-text {
+  @include font-sans;
+
+  font-size: 16px;
+  padding: 15px 0 0;
+  color: var(--c-app-text-secondary);
+}
+
+.c-main {
+  padding-left: var(--app-margin);
+  flex-direction: column;
+  display: flex;
+}
+
+.c-view {
+  min-height: 100%;
+  padding-bottom: var(--nav-height);
+}
+
+.c-view--full {
+  padding-bottom: 0;
+
+  .c-main {
+    padding-right: var(--app-margin);
+  }
+}

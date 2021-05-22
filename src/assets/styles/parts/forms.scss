@@ -1,0 +1,125 @@
+input, 
+textarea {
+  @include font-sans;
+
+  border: none;
+  outline: none;
+  box-shadow: none;
+  line-height: 1.25;
+}
+
+textarea {
+  resize: none;
+}
+
+/**
+ * Forms
+ */
+
+.c-form__line {
+  width: 100%;
+  display: flex;
+}
+
+.c-form__field {
+  position: relative;
+  padding: 16px 0 0 0;
+  margin: 0 0 26px 0;
+  flex: 1;
+}
+
+.c-form__label {
+  @include font-sans-mini;
+
+  position: absolute;
+  color: var(--c-input-label);
+  padding: 0 var(--app-margin) 0 0;
+  text-transform: lowercase;
+  font-size: 14px;
+  top: 0;
+  left: 0;
+
+  transition: all 0.2s;
+}
+
+.c-form__input {
+  border-bottom: 1px solid var(--c-input-border);
+  padding: 8px var(--app-margin) 10px 0px;
+  background-color: rgba(0, 0, 0, 0);
+  color: var(--c-input-text);
+  font-weight: 400;
+  font-size: 18px;
+  display: flex;
+  width: 100%;
+
+  @include placeholder {
+    opacity: 0;
+  }
+}
+
+.c-form__input:placeholder-shown + .c-form__label {
+  font-size: 18px;
+  top: 24px;
+}
+
+/**
+ * Switch
+ */
+
+.c-form__switch {
+  margin: 0 0 16px;
+  display: flex;
+  padding: 0;
+
+  .c-form__label {
+    position: static;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-bottom: 0px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+} 
+
+/**
+ * Actions
+ */
+
+.c-form__actions {
+  .c-btn-link {
+    @include font-sans-mini;
+  
+    font-size: 14px;
+    color: var(--c-input-action);
+    padding: 2px 0px;
+  }
+}
+
+/**
+ * Feature
+ */
+
+.c-form__feature {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 12px 14px 14px;
+}
+
+/**
+ * Error
+ */
+
+.c-form__error {
+  padding: 5px var(--app-margin) 5px 0;
+}
+
+.c-form__error-text {
+  @include font-sans-mini;
+
+  font-size: 14px;
+  color: var(--c-error);
+}

@@ -1,0 +1,66 @@
+.c-card {
+  border-top: 1px solid var(--c-app-border);
+  padding: 10px var(--app-margin) 35px 0;
+  display: flex;
+}
+
+.c-card__content {
+  flex: 1;
+}
+
+.c-card__top {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.c-card__bottom {
+  width: 100%;
+}
+
+.c-card__side {
+  width: 40px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/**
+ * Flashcard
+ */
+
+.c-card__phrase {
+  color: var(--c-app-text-primary);
+  font-size: 22px;
+  padding: 0 8px 0 0;
+}
+
+.c-card__pronunciation {
+  color: var(--c-feather);
+  font-size: 15px;
+  padding: 4px 8px 2px 0;
+}
+
+.c-card__translation {
+  color: var(--c-app-text-secondary);
+  font-size: 18px;
+  padding: 4px 0 0;
+  font-weight: 340;
+}
+
+/**
+ * Settings
+ */
+
+.c-card__title {
+  color: var(--c-app-text-primary);
+  font-size: 22px;
+  padding: 0 8px 0 0;
+}
+
+.c-card__description {
+  color: var(--c-app-text-secondary);
+  font-size: 15px;
+  padding: 6px 0 0;
+  font-weight: 340;
+}

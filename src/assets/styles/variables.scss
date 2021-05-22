@@ -1,0 +1,116 @@
+:root {
+  /**
+   * Colors
+   */
+  --c-black: rgb(0, 0, 0, 1);
+  --c-white: rgb(255, 255, 255, 1);
+  --c-sand: rgb(241, 237, 234, 1);
+  --c-muted: rgb(0, 0, 0, 0.48);
+  --c-feather: rgb(0, 0, 0, 0.28);
+  --c-error: rgb(182, 0, 11, 0.6);
+
+  /**
+   * Fonts
+   */
+  --font-special: 'Haigrast', 'Times New Roman', sans-serif;
+  --font-serif: 'Antic Didone', 'Times New Roman', sans-serif;
+  --font-sans: 'Libre Franklin', 'Arial', sans-serif;
+
+  /**
+   * App
+   */
+  --c-app-background-primary: var(--c-sand);
+  --c-app-background-secondary: var(--c-white);
+  --c-app-text-primary: var(--c-black);
+  --c-app-text-secondary: var(--c-muted);
+  --c-app-border: var(--c-black);
+
+  /**
+   * Forms
+   */
+  --c-input-placeholder: var(--c-feather);
+  --c-input-text: var(--c-black);
+  --c-input-border: var(--c-black);
+  --c-input-label: var(--c-feather);
+  --c-input-action: var(--c-muted);
+
+  /**
+   * Layout
+   */ 
+  --app-margin: 22px;
+  --nav-height: 80px;
+}
+
+/**
+ * Mixins
+ */
+
+@mixin min($width) {
+  @if ($width) {
+    @media (min-width: $width) {
+        @content;
+    }
+  }
+}
+
+@mixin max($width) {
+  @if ($width) {
+    @media (max-width: $width) {
+        @content;
+    }
+  }
+}
+
+@mixin min-h($height) {
+  @if ($height) {
+    @media (min-height: $height) {
+        @content;
+    }
+  }
+}
+
+@mixin max-h($height) {
+  @if ($height) {
+    @media (max-height: $height) {
+        @content;
+    }
+  }
+}
+ 
+@mixin pseudo($display: block, $position: absolute, $content: "") {
+  content: $content;
+  display: $display;
+  position: $position;
+}
+
+@mixin placeholder {
+  &::placeholder {@content}
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder {@content}
+  &::-moz-placeholder {@content}
+  &:-ms-input-placeholder {@content}  
+}
+
+/**
+ * Fonts
+ */
+
+@mixin font-special {
+  font-family: var(--font-special);
+  letter-spacing: 0;
+}
+
+@mixin font-serif {
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
+}
+
+@mixin font-sans {
+  font-family: var(--font-sans);
+  letter-spacing: -0.04em;
+}
+
+@mixin font-sans-mini {
+  font-family: var(--font-sans);
+  letter-spacing: -0.02em;
+}

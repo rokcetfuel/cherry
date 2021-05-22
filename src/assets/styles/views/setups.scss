@@ -1,0 +1,71 @@
+.c-new-setup,
+.c-edit-setup {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .c-header {
+    position: relative;
+    overflow: hidden;
+
+    &:before {
+      content: '';
+      position: absolute;
+      background: var(--c-app-background-secondary);
+      border-radius: 400px;
+      width: 375px;
+      height: 375px;
+      z-index: -1;
+    }
+  }
+
+  .c-header-text {
+    height: 60px;
+  }
+
+  .c-form {
+    padding-bottom: 8vh;
+
+    form {
+      min-height: 160px;
+    }
+  }
+}
+
+.c-new-setup {
+  .c-header {
+    &:before {
+      top: -110px;
+      left: -80px;
+    }
+  }
+}
+
+.c-edit-setup {
+  .c-header {
+    &:before {
+      top: -140px;
+      left: -90px;
+    }
+  }
+}
+
+.c-edit-setup__remove {
+  position: absolute;
+  height: 115px;
+  width: 115px;
+  top: 140px;
+  right: -15px;
+}
+
+.c-edit-setup__remove-circle {
+  @include font-sans;
+
+  font-size: 14px;
+  border: 1px solid #000;
+  border-radius: 115px;
+  height: 100%;
+  width: 100%;
+  padding: 40px 30px;
+  cursor: pointer;
+}
