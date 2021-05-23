@@ -29,10 +29,18 @@
 
   &:first-child {
     justify-content: flex-start;
+
+    .c-nav-item__link {
+      padding: 15px 30px 15px 0px;
+    }
   }
 
   &:last-child:not(:first-child) {
     justify-content: flex-end;
+
+    .c-nav-item__link {
+      padding: 15px 0px 15px 30px;
+    }
   }
 
   .c-btn-arrow {
@@ -44,6 +52,7 @@
 
 .c-nav-item__link {
   cursor: pointer;
+  padding: 15px 30px;
 
   .c-btn-arrow {
     img {

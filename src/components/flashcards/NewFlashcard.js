@@ -62,7 +62,7 @@ export default function NewFlashcard() {
 
   return (
     <>
-      { loading ? <Loading /> : '' }
+      { loading && <Loading /> }
       <div className="c-view c-view--nav-last-white c-new-flashcard">
         <div className='c-header'>
           <div className='c-header-name'>

@@ -14,5 +14,7 @@ yarn-debug.log*
 yarn-error.log*
 yarn.lock
 
-# cherry
+# firebase
 /src/firebase.js
+.firebase/
+.firebaserc

@@ -4,12 +4,6 @@
   .c-header-logo {
     padding: 40px 0 60px;
   }
-
-  .c-home-nav {
-    position: fixed;
-    bottom: 50px;
-    left: 28px;
-  }
 }
 
 .c-home-one {
@@ -133,4 +127,11 @@
       padding: 130px 10px 115px 80px;
     }
   }
+}
+
+.c-home-nav {
+  position: fixed;
+  padding: 20px;
+  bottom: 30px;
+  left: 15px;
 }

@@ -51,13 +51,15 @@ export const createSetup = createAsyncThunk(
     if (name.length > 0) {
       const state = getState()
       const uid = state.auth.user.uid
+      const sortBy = 'created'
 
       /**
        * Update Firestore
        */
       const setupDoc = await firestore.collection('users/' + uid + '/setups').add({
         name: name,
-        pronunciation: pronunciation
+        pronunciation: pronunciation,
+        sort: sortBy
       })
 
       await firestore.collection('users').doc(uid).update({currentSetup: setupDoc.id})
@@ -68,7 +70,8 @@ export const createSetup = createAsyncThunk(
       const newSetup = {
         id: setupDoc.id,
         name: name, 
-        pronunciation: pronunciation
+        pronunciation: pronunciation,
+        sort: sortBy
       }
 
       let setups = state.data.setups ? state.data.setups.map(a => Object.assign({}, a)) : []
