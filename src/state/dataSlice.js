@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import firebase from '../firebase'
+import { sortFlashcards } from '../helpers'
 
 const firestore = firebase.firestore()
 
@@ -25,8 +26,10 @@ export const initializeData = createAsyncThunk(
           }
 
           if (currentSetup) {
+            const sort = setups.find(a => a.id === currentSetup).sort
             const flashcardsData = await firestore.collection('users/' + uid + '/flashcards').where('setup', '==', currentSetup).get()
-            const flashcards = flashcardsData.docs.length > 0 ? flashcardsData.docs.map((doc) => ({id: doc.id, ...doc.data()})) : null
+            const flashcardsRaw = flashcardsData.docs.length > 0 ? flashcardsData.docs.map((doc) => ({id: doc.id, ...doc.data()})) : null
+            const flashcards = sortFlashcards(flashcardsRaw, sort.by ? sort.by : 'created', sort.order ? sort.order : 'desc')
 
             if (flashcards) {
               data = {
@@ -51,7 +54,7 @@ export const createSetup = createAsyncThunk(
     if (name.length > 0) {
       const state = getState()
       const uid = state.auth.user.uid
-      const sortBy = 'created'
+      const sort = {by: 'created', order: 'desc'}
 
       /**
        * Update Firestore
@@ -59,7 +62,7 @@ export const createSetup = createAsyncThunk(
       const setupDoc = await firestore.collection('users/' + uid + '/setups').add({
         name: name,
         pronunciation: pronunciation,
-        sort: sortBy
+        sort: sort
       })
 
       await firestore.collection('users').doc(uid).update({currentSetup: setupDoc.id})
@@ -71,7 +74,7 @@ export const createSetup = createAsyncThunk(
         id: setupDoc.id,
         name: name, 
         pronunciation: pronunciation,
-        sort: sortBy
+        sort: sort
       }
 
       let setups = state.data.setups ? state.data.setups.map(a => Object.assign({}, a)) : []
@@ -94,6 +97,7 @@ export const switchSetup = createAsyncThunk(
   async (id, {getState}) => {
     const state = getState()
     const uid = state.auth.user.uid
+    const setups = state.data.setups
 
     /**
      * Update Firestore
@@ -103,8 +107,10 @@ export const switchSetup = createAsyncThunk(
     /**
      * Get new flashcards
      */
+    const sort = setups.find(a => a.id === id).sort
     const flashcardsData = await firestore.collection('users/' + uid + '/flashcards').where('setup', '==', id).get()
-    const flashcards = flashcardsData.docs.length > 0 ? flashcardsData.docs.map((doc) => ({id: doc.id, ...doc.data()})) : null
+    const flashcardsRaw = flashcardsData.docs.length > 0 ? flashcardsData.docs.map((doc) => ({id: doc.id, ...doc.data()})) : null
+    const flashcards = sortFlashcards(flashcardsRaw, sort.by ? sort.by : 'created', sort.order ? sort.order : 'desc')
     
     return {
       currentSetup: id,
@@ -199,9 +205,12 @@ export const removeSetup = createAsyncThunk(
      * Get new flashcards
      */
     let newFlashcards = null
+
     if (newCurrentSetup) {
+      const sort = newSetups.find(a => a.id === newCurrentSetup).sort
       const newFlashcardsData = await firestore.collection('users/' + uid + '/flashcards').where('setup', '==', newCurrentSetup).get()
-      newFlashcards = newFlashcardsData.docs.length > 0 ? newFlashcardsData.docs.map((doc) => ({id: doc.id, ...doc.data()})) : null
+      const newFlashcardsRaw = newFlashcardsData.docs.length > 0 ? newFlashcardsData.docs.map((doc) => ({id: doc.id, ...doc.data()})) : null
+      newFlashcards = sortFlashcards(newFlashcardsRaw, sort.by ? sort.by : 'created', sort.order ? sort.order : 'desc')
     }
 
     return {
@@ -218,6 +227,7 @@ export const createFlashcard = createAsyncThunk(
     if (phrase.length > 0 && translation.length > 0) {
       const state = getState()
       const uid = state.auth.user.uid
+      const setups = state.data.setups
       const currentSetup = state.data.currentSetup
       const timestamp = Date.now()
 
@@ -244,8 +254,10 @@ export const createFlashcard = createAsyncThunk(
         created: timestamp
       }
 
-      let flashcards = state.data.flashcards ? state.data.flashcards.map(a => Object.assign({}, a)) : []
-      flashcards.push(newFlashcard)
+      let flashcardsRaw = state.data.flashcards ? state.data.flashcards.map(a => Object.assign({}, a)) : []
+      flashcardsRaw.push(newFlashcard)
+      const sort = setups.find(a => a.id === currentSetup).sort
+      const flashcards = sortFlashcards(flashcardsRaw, sort.by ? sort.by : 'created', sort.order ? sort.order : 'desc')
 
       return {
         flashcards: flashcards
@@ -264,6 +276,8 @@ export const editFlashcard = createAsyncThunk(
     if (phrase.length > 0 && translation.length > 0) {
       const state = getState()
       const uid = state.auth.user.uid
+      const currentSetup = state.data.currentSetup
+      const setups = state.data.setups
       const timestamp = Date.now()
 
       /**
@@ -279,12 +293,15 @@ export const editFlashcard = createAsyncThunk(
       /**
        * Update State
        */
-      let flashcards = state.data.flashcards ? state.data.flashcards.map(a => Object.assign({}, a)) : []
-      const flashcardIndex = flashcards.findIndex((a => a.id === id))
-      flashcards[flashcardIndex].phrase = phrase
-      flashcards[flashcardIndex].translation = translation
-      flashcards[flashcardIndex].pronunciation = pronunciation
-      flashcards[flashcardIndex].edited = timestamp
+      let flashcardsRaw = state.data.flashcards ? state.data.flashcards.map(a => Object.assign({}, a)) : []
+      const flashcardIndex = flashcardsRaw.findIndex((a => a.id === id))
+      flashcardsRaw[flashcardIndex].phrase = phrase
+      flashcardsRaw[flashcardIndex].translation = translation
+      flashcardsRaw[flashcardIndex].pronunciation = pronunciation
+      flashcardsRaw[flashcardIndex].edited = timestamp
+
+      const sort = setups.find(a => a.id === currentSetup).sort
+      const flashcards = sortFlashcards(flashcardsRaw, sort.by ? sort.by : 'created', sort.order ? sort.order : 'desc')
 
       return {
         flashcards: flashcards
@@ -316,6 +333,41 @@ export const removeFlashcard = createAsyncThunk(
     flashcards.splice(flashcardIndex, 1)
 
     return {
+      flashcards: flashcards
+    }
+  }
+)
+
+export const updateFilters = createAsyncThunk(
+  'data/updateFilters',
+  async ({sort}, {getState}) => {
+    const state = getState()
+    const uid = state.auth.user.uid
+    const currentSetup = state.data.currentSetup
+
+    /**
+     * Update Firestore
+     */
+    await firestore.collection('users/' + uid + '/setups').doc(currentSetup).update({
+      sort: sort
+    })
+
+    /**
+     * Update State
+     */
+    let setups = state.data.setups ? state.data.setups.map(a => Object.assign({}, a)) : []
+    const setupIndex = setups.findIndex((a => a.id === currentSetup))
+    setups[setupIndex].sort = sort
+
+    /**
+     * Sort Flashcards
+     */
+    const sortBy = sort.by ? sort.by : 'created'
+    const sortOrder = sort.order ? sort.order : 'asc'
+    const flashcards = sortFlashcards(state.data.flashcards, sortBy, sortOrder)
+
+    return {
+      setups: setups,
       flashcards: flashcards
     }
   }
@@ -519,6 +571,24 @@ export const dataSlice = createSlice({
     [removeFlashcard.rejected]: (state, { error }) => {
       state.status.error = error.message
       state.status.loading = false
+    },
+
+    /**
+     * Update Filters
+     */
+    [updateFilters.pending]: (state) => {
+      state.status.loading = true
+      state.status.error = null
+    },
+    [updateFilters.fulfilled]: (state, { payload }) => {
+      const { setups, flashcards } = payload
+      state.status.loading = false
+      state.flashcards = flashcards
+      state.setups = setups
+    },
+    [updateFilters.rejected]: (state, { error }) => {
+      state.status.loading = false
+      state.status.error = error.message
     },
   }
 })

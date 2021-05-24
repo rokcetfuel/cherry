@@ -17,13 +17,10 @@ export default function Flashcards() {
    * Filter
    */
   const [filter, setFilter] = useState(false)
-
+  
   return (
     <>
-      { filter && <Filter 
-        onConfirm={() => setFilter(false)} 
-        onReturn={() => setFilter(false)} 
-      /> }
+      { filter && <Filter handleReturn={() => setFilter(false)}/> }
       
       <div className={`c-view c-flashcards ${(flashcards && flashcards.length > 0) ? 'c-view--nav-last-white' : 'c-flashcards-empty'}`}>
         <div className='c-header'>

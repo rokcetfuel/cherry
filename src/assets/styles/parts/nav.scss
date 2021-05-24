@@ -52,6 +52,7 @@
 
 .c-nav-item__link {
   cursor: pointer;
+  white-space: nowrap;
   padding: 15px 30px;
 
   .c-btn-arrow {

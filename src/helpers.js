@@ -1,3 +1,5 @@
+import { orderBy } from 'lodash-es'
+
 export const dateRelativeTime = (d) => {
   const units = {
     year: 24 * 60 * 60 * 1000 * 365,
@@ -22,4 +24,23 @@ export const dateRelativeTime = (d) => {
   }
 
   return getRelativeTime(date)
+}
+
+export const sortFlashcards = (flashcards, by, order) => {
+  let newFlashcards = []
+
+  if (flashcards && flashcards.length > 0) {
+    newFlashcards = flashcards.map(a => Object.assign({}, a))
+
+    if (by === 'edited') {
+      newFlashcards = orderBy(flashcards, (o) => o.edited ? o.edited : o.created, order)
+    } else if (by === 'pronunciation') {
+      newFlashcards = orderBy(flashcards, (o) => o.pronunciation ? o.pronunciation : null, order)
+      newFlashcards.sort((a, b) => (a===null)-(b===null) || +(a>b) || -(a<b))
+    } else {
+      newFlashcards = orderBy(flashcards, by, order)
+    }
+  }
+
+  return newFlashcards
 }
