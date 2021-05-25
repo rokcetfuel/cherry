@@ -20,6 +20,8 @@ import NewSetup from './components/settings/NewSetup'
 import EditSetup from './components/settings/EditSetup'
 import Account from './components/settings/Account'
 
+import Learn from './components/learn/Learn'
+
 function App() {
   return (
     <DataProvider>
@@ -37,6 +39,7 @@ function App() {
             <PrivateRoute path='/flashcards' exact component={Flashcards} />
             <PrivateRoute path='/flashcards/new' exact component={NewFlashcard} />
             <PrivateRoute path='/flashcard/:id' component={Flashcard} />
+            <PrivateRoute path='/learn' exact component={Learn} />
             <Redirect to='/' />
           </Switch>
       </Router>

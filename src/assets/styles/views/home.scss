@@ -27,6 +27,11 @@
 
 .c-home-setup {
   padding-bottom: 60px;
+
+  @include min($sm) {
+    width: calc(50% + 80px);
+    flex: unset;
+  }
 }
 
 .c-home-create__box {
@@ -45,6 +50,10 @@
     font-size: 32px;
     height: 240px;
     width: 240px;
+  }
+
+  @include min($sm) {
+    margin-top: 40px;
   }
 
   a {
@@ -88,6 +97,10 @@
   justify-content: center;
   position: relative;
   height: 300px;
+
+  @include min($sm) {
+    height: 250px;
+  }
 }
 
 .c-home-browse {
@@ -114,6 +127,11 @@
     width: 350px;
   }
 
+  @include min($sm) {
+    margin-top: -110px;
+    margin-right: -160px;
+  }
+
   a {
     display: block;
     border-radius: 350px;
@@ -126,6 +144,58 @@
     @include min(410px) {
       padding: 130px 10px 115px 80px;
     }
+  }
+}
+
+.c-home-three {
+  justify-content: center;
+  position: relative;
+  flex-wrap: wrap;
+  height: 220px;
+  display: flex;
+
+  @include min(410px) {
+    height: 260px;
+  }
+
+  @include min($sm) {
+    margin-top: -140px;
+    height: 240px;
+  }
+}
+
+.c-home-learn {
+  background: var(--c-app-background-secondary);
+  border-radius: 200px;
+  position: absolute;
+  margin-right: 80px;
+  margin-top: -30px;
+  height: 200px;
+  width: 200px;
+
+  @include min(355px) {
+    margin-top: -10px;
+  }
+
+  @include min(410px) {
+    margin-top: 30px;
+  }
+
+  @include min($sm) {
+    margin-left: -200px;
+    margin-top: 0;
+  }
+
+  a {
+    @include font-serif;
+
+    justify-content: center;
+    border-radius: 200px;
+    align-items: center;
+    font-size: 32px;
+    display: flex;
+    height: 100%;
+    width: 100%;
   }
 }
 

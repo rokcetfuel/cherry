@@ -20,11 +20,11 @@ export default function Filter(props) {
   const [sort, setSort] = useState(setups.find(a => a.id === currentSetup).sort)
 
   const sortOptions = {
-    created: 'Created',
-    edited: 'Edited',
-    phrase: 'Phrase',
-    translation: 'Translation',
-    pronunciation: 'Pronunciation'
+    created: 'created',
+    edited: 'edited',
+    phrase: 'phrase',
+    translation: 'translation',
+    pronunciation: 'pronunciation'
   }
 
   const handleSort = (key) => {
@@ -60,23 +60,23 @@ export default function Filter(props) {
           </div>
         </div>
         <div className='c-main'>
-          <div className='c-section c-filter-sort'>
+          <div className='c-section c-section-sort c-filter-sort'>
             <div className='c-section__header'>
               <div className='c-section__header-name'>
                 sort by
               </div>
             </div>
             <div className='c-section__content'>
-              <div className='c-section__line c-filter-sort__content'>
+              <div className='c-section__line'>
                 {Object.keys(sortOptions).map((key) => {
-                  let sortClasses = `c-filter-sort__option ${sort.by === key ? `c-filter-sort__option--active c-filter-sort__option--${sort.order}` : ''}`
+                  let sortClasses = `c-section-sort__option ${sort.by === key ? `c-section-sort__option--active c-section-sort__option--${sort.order}` : ''}`
 
                   return (
                     <div key={key} onClick={() => handleSort(key)} className={sortClasses}>
-                      <span className='c-filter-sort__option-name'>
+                      <span className='c-section-sort__option-name'>
                         {sortOptions[key]}
                       </span>
-                      <span className='c-filter-sort__option-arrow'>
+                      <span className='c-section-sort__option-arrow'>
                         <img src={sortArrowSvg} alt='' />
                       </span>
                     </div>

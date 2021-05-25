@@ -41,6 +41,13 @@ export default function Home() {
             </Link>
           </div>
         </div>
+        <div className='c-home-three'>
+          <div className='c-home-learn'>
+            <Link to='/learn'>
+              learn
+            </Link>
+          </div>
+        </div>
         <div className='c-home-nav'>
           <Link to='/settings'>
             <div className='c-nav-burger'>

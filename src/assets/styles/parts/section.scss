@@ -52,3 +52,54 @@
     height: 22px;
   }
 }
+
+/* Sorting */
+
+.c-section-sort {
+  padding: 0 0 40px 0;
+
+  .c-section__line {
+    padding-right: calc(var(--app-margin) - 10px);
+    padding-top: 7px;
+    flex-wrap: wrap;
+    display: flex;
+  }
+
+  .c-section-sort__option {
+    border: 1px solid var(--c-app-border);
+    margin: 0 10px 10px 0;
+    align-items: center;
+    border-radius: 50px;
+    padding: 8px 14px;
+    font-size: 16px;
+    display: flex;
+    opacity: 0.5;
+
+    &--active {
+      background-color: var(--c-app-text-primary);
+      color: var(--c-app-background-primary);
+      opacity: 1;
+
+      .c-section-sort__option-arrow {
+        display: flex;
+
+        img {
+          height: 18px;
+        }
+      }
+    }
+
+    &--desc {
+      .c-section-sort__option-arrow {
+        img {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
+  .c-section-sort__option-arrow {
+    padding: 0 0 0 8px;
+    display: none;
+  }
+}
