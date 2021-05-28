@@ -32,15 +32,26 @@ export const sortFlashcards = (flashcards, by, order) => {
   if (flashcards && flashcards.length > 0) {
     newFlashcards = flashcards.map(a => Object.assign({}, a))
 
-    if (by === 'edited') {
+    if (by === 'random') {
+      shuffleArray(newFlashcards)
+    } else if (by === 'edited') {
       newFlashcards = orderBy(flashcards, (o) => o.edited ? o.edited : o.created, order)
     } else if (by === 'pronunciation') {
       newFlashcards = orderBy(flashcards, (o) => o.pronunciation ? o.pronunciation : null, order)
-      newFlashcards.sort((a, b) => (a===null)-(b===null) || +(a>b) || -(a<b))
+      newFlashcards.sort((a, b) => (a === null) - (b === null) || +(a > b) || -(a < b))
     } else {
       newFlashcards = orderBy(flashcards, by, order)
     }
   }
 
   return newFlashcards
+}
+
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const temp = array[i]
+    array[i] = array[j]
+    array[j] = temp
+  }
 }

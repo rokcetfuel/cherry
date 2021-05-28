@@ -39,6 +39,15 @@ button {
   @include font-sans-mini;
 }
 
+a[disabled],
+button[disabled] {
+  cursor: default;
+  
+  .c-btn-arrow {
+    opacity: 0.25;
+  }
+}
+
 .c-btn-arrow--right {
   transform: rotate(180deg);
 }
