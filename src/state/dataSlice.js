@@ -223,7 +223,7 @@ export const removeSetup = createAsyncThunk(
 
 export const createFlashcard = createAsyncThunk(
   'data/createFlashcard',
-  async ({phrase, translation, pronunciation}, {getState}) => {
+  async ({phrase, translation, pronunciation, tags}, {getState}) => {
     if (phrase.length > 0 && translation.length > 0) {
       const state = getState()
       const uid = state.auth.user.uid
@@ -239,6 +239,7 @@ export const createFlashcard = createAsyncThunk(
         phrase: phrase, 
         translation: translation,
         pronunciation: pronunciation,
+        tags: tags,
         created: timestamp
       })
 
@@ -251,6 +252,7 @@ export const createFlashcard = createAsyncThunk(
         phrase: phrase, 
         translation: translation,
         pronunciation: pronunciation,
+        tags: tags,
         created: timestamp
       }
 
@@ -272,7 +274,7 @@ export const createFlashcard = createAsyncThunk(
 
 export const editFlashcard = createAsyncThunk(
   'data/editFlashcard',
-  async ({id, phrase, translation, pronunciation}, {getState}) => {
+  async ({id, phrase, translation, pronunciation, tags}, {getState}) => {
     if (phrase.length > 0 && translation.length > 0) {
       const state = getState()
       const uid = state.auth.user.uid
@@ -287,6 +289,7 @@ export const editFlashcard = createAsyncThunk(
         phrase: phrase, 
         translation: translation,
         pronunciation: pronunciation,
+        tags: tags,
         edited: timestamp
       })
 
@@ -298,6 +301,7 @@ export const editFlashcard = createAsyncThunk(
       flashcardsRaw[flashcardIndex].phrase = phrase
       flashcardsRaw[flashcardIndex].translation = translation
       flashcardsRaw[flashcardIndex].pronunciation = pronunciation
+      flashcardsRaw[flashcardIndex].tags = tags
       flashcardsRaw[flashcardIndex].edited = timestamp
 
       const sort = setups.find(a => a.id === currentSetup).sort

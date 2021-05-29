@@ -75,10 +75,19 @@
     display: flex;
     opacity: 0.5;
 
+    &:hover {
+      cursor: pointer;
+      opacity: 0.75;
+    }
+
     &--active {
       background-color: var(--c-app-text-primary);
       color: var(--c-app-background-primary);
       opacity: 1;
+
+      &:hover {
+        opacity: 1;
+      }
 
       .c-section-sort__option-arrow {
         display: flex;
