@@ -6,6 +6,7 @@ export default function Home() {
   const setups = useSelector(state => state.data.setups)
   const currentSetupId = useSelector(state => state.data.currentSetup)
   const currentSetup = setups.filter(setup => setup.id === currentSetupId)[0]
+  const flashcards = useSelector(state => state.data.flashcards)
 
   return (
     <div className='c-view c-view--full c-home'>
@@ -41,13 +42,15 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className='c-home-three'>
-          <div className='c-home-learn'>
-            <Link to='/learn'>
-              learn
-            </Link>
+        { flashcards && flashcards.length > 0 &&
+          <div className='c-home-three'>
+            <div className='c-home-learn'>
+              <Link to='/learn'>
+                learn
+              </Link>
+            </div>
           </div>
-        </div>
+        }
         <div className='c-home-nav'>
           <Link to='/settings'>
             <div className='c-nav-burger'>

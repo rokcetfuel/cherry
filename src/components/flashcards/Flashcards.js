@@ -20,7 +20,7 @@ export default function Flashcards() {
   
   return (
     <>
-      { filter && <Filter handleReturn={() => setFilter(false)}/> }
+      { filter && <Filter handleReturn={() => setFilter(false)} pronunciaton={pronunciationActive} /> }
       
       <div className={`c-view c-flashcards ${(flashcards && flashcards.length > 0) ? 'c-view--nav-last-white' : 'c-flashcards-empty'}`}>
         <div className='c-header'>
@@ -49,7 +49,7 @@ export default function Flashcards() {
               <Button direction='left' />
             </Link>
           </div>
-          { flashcards ?
+          { flashcards && flashcards.length > 0 &&
             <>
               <div className='c-nav-item c-flashcards-filter-btn'>
                 <button className='c-nav-item__link' onClick={() => setFilter(true)}>
@@ -64,7 +64,7 @@ export default function Flashcards() {
                 </Link>
               </div>
             </>
-          : '' }
+          }
         </div>
       </div>
     </>

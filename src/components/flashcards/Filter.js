@@ -6,7 +6,7 @@ import Loading from '../visual/Loading'
 import sortArrowSvg from '../../assets/img/sort-arrow.svg'
 
 export default function Filter(props) {
-  const { handleReturn } = props
+  const { handleReturn, pronunciaton } = props
   const dispatch = useDispatch()
 
   const currentSetup = useSelector(state => state.data.currentSetup)
@@ -23,9 +23,10 @@ export default function Filter(props) {
     created: 'created',
     edited: 'edited',
     phrase: 'phrase',
-    translation: 'translation',
-    pronunciation: 'pronunciation'
+    translation: 'translation'
   }
+
+  if (pronunciaton) sortOptions.pronunciation = 'pronunciation'
 
   const handleSort = (key) => {
     setSort({

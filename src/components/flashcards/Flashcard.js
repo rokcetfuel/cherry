@@ -32,6 +32,7 @@ export default function Flashcard(props) {
    */
   const [savedFlashcard, setSavedFlashcard] = useState(flashcards.find(a => a.id === id))
   const [flashcardChanged, setFlashcardChanged] = useState(false)
+  
   useEffect(() => {
     if (flashcard && JSON.stringify(flashcard) !== JSON.stringify(savedFlashcard)) {
       setFlashcardChanged(true)
