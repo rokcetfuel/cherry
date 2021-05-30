@@ -13,7 +13,7 @@ export default function LearnFinished(props) {
         </div>
         <div className='c-learn-finish__bottom'>
           <div className='c-learn-finish__text'>
-            You revised all <span>{count}</span> phrases.
+            You revised <span>{count}</span> phrases.
           </div>
           <div className='c-learn-finish__actions'>
             <button className='c-learn-finish__actions-btn' onClick={again}>

@@ -11,7 +11,7 @@ export default function Learn() {
   const setups = useSelector(state => state.data.setups)
   const flashcards = useSelector(state => state.data.flashcards)
   const currentSetup = useSelector(state => state.data.currentSetup)
-  const pronunciationActive = setups.find(a => a.id === currentSetup).pronunciation
+  const pronunciation = setups.find(a => a.id === currentSetup).pronunciation
 
   /**
    * Sorting
@@ -27,7 +27,7 @@ export default function Learn() {
     translation: 'translation'
   }
 
-  if (pronunciationActive) {
+  if (pronunciation) {
     sortOptions.pronunciation = 'pronunciation'
   }
 
@@ -46,7 +46,7 @@ export default function Learn() {
     translation: 'translation'
   }
 
-  if (pronunciationActive) {
+  if (pronunciation) {
     revealedOptions.pronunciation = 'pronunciation'
   }
 
@@ -55,19 +55,61 @@ export default function Learn() {
   }
 
   /**
+   * Tags
+   */
+  const [tags] = useState(
+    flashcards && flashcards.length > 0 ? 
+    [...new Set(flashcards.map(a => a.tags).flat().filter(Boolean))].sort() : 
+    null 
+  )
+
+  const [selectedTags, setSelectedTags] = useState([])
+
+  const handleTags = (tag) => {
+    if (selectedTags) {
+      if (selectedTags.includes(tag)) {
+        setSelectedTags(selectedTags.filter((thisTag) => thisTag !== tag))
+      } else {
+        setSelectedTags([...selectedTags, tag])
+      }
+    } else {
+      setSelectedTags([tag])
+    }
+  }
+
+  /**
    * Progress
    */
+  const [finished, setFinished] = useState(false)
   const [inProgress, setInProgress] = useState(false)
   const [progressFlashcards, setProgressFlashcards] = useState(false)
-  const [finished, setFinished] = useState(false)
+  const [progressCount, setProgressCount] = useState(flashcards.length)
 
   const handleBegin = () => {
-    setProgressFlashcards(sortFlashcards(flashcards, sort, order))
+    const sortedFlashcards = sortFlashcards(flashcards, sort, order)
+
+    if (selectedTags && selectedTags.length > 0) {
+      const filteredFlashcards = []
+
+      sortedFlashcards.forEach(card => {
+        if (card.tags && card.tags.length > 0) {
+          if (selectedTags.some(tag => card.tags.includes(tag))) {
+            filteredFlashcards.push(card)
+          }
+        }
+      })
+
+      setProgressCount(filteredFlashcards.length)
+      setProgressFlashcards(filteredFlashcards)
+    } else {
+      setProgressCount(sortedFlashcards.length)
+      setProgressFlashcards(sortedFlashcards)
+    }
+
     setInProgress(true)
   }
 
   const handleStop = () => {
-    // #todo domyslnie zeby pytalo czy na pewno
     setInProgress(false)
   }
 
@@ -93,14 +135,14 @@ export default function Learn() {
         <>
           { finished ? 
             <LearnFinished 
-              count={flashcards.length} 
+              count={progressCount} 
               again={handleAgain} 
-              done={handleDone} 
+              done={handleDone}
             />
           : 
             <LearnProgress 
               flashcards={progressFlashcards} 
-              pronunciation={pronunciationActive}
+              pronunciation={pronunciation}
               revealed={revealed} 
               finish={handleFinish} 
               stop={handleStop} 
@@ -168,6 +210,26 @@ export default function Learn() {
               </div>
             </div>
 
+            { tags && tags.length > 0 &&
+              <div className='c-section c-section-tags c-learn-tags'>
+                <div className='c-section__header'>
+                  <div className='c-section__header-name'>
+                    tags
+                  </div>
+                </div>
+                <div className='c-section__content'>
+                  <div className='c-section__line'>
+                    {tags.map((tag) => { 
+                      let tagClass = `c-section-tags__item${selectedTags && selectedTags.includes(tag) ? ' c-section-tags__item--active' : ''}`
+                      
+                      return (
+                        <div key={tag} onClick={() => handleTags(tag)} className={tagClass}>{tag}</div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            }
           </div>  
           <div className='c-nav'>
             <div className='c-nav-item'>

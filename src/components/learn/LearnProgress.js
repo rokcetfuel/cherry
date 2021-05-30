@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useSwipeable } from 'react-swipeable'
 import Button from '../visual/Button'
 import crossSvg from '../../assets/img/cross.svg'
 
@@ -46,6 +47,14 @@ export default function LearnProgress(props) {
   }
 
   /**
+   * Swipe
+   */
+  const handleSwipe = useSwipeable({
+    onSwipedRight: (e) => handlePrev(),
+    onSwipedLeft: (e) => handleNext()
+  })
+
+  /**
    * Visibility
    */
   const [visible, setVisible] = useState({
@@ -66,7 +75,7 @@ export default function LearnProgress(props) {
         </button>
       </div>
 
-      <div className='c-main'>
+      <div className='c-main' {...handleSwipe}>
         <div className='c-learn-progress__top'>
           <div className='c-learn-progress__phrase'>
             { revealed === 'phrase' || visible.phrase ? 
