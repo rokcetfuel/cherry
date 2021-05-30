@@ -8,10 +8,10 @@ import AutosizeInput from 'react-input-autosize'
 import crossMiniSvg from '../../assets/img/cross-mini.svg'
 
 import { editFlashcard, removeFlashcard, cleanDataError } from '../../state/dataSlice.js'
+import { dateRelativeTime } from '../../helpers.js'
 import Button from '../visual/Button'
 import Loading from '../visual/Loading'
 import Confirm from '../visual/Confirm'
-import { dateRelativeTime } from '../../helpers.js'
 
 export default function Flashcard(props) {
   const history = useHistory()

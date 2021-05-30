@@ -6,12 +6,12 @@ import Loading from '../visual/Loading'
 import sortArrowSvg from '../../assets/img/sort-arrow.svg'
 
 export default function Filter(props) {
-  const { handleReturn, pronunciaton } = props
+  const { tags, pronunciaton, handleReturn } = props
   const dispatch = useDispatch()
 
-  const currentSetup = useSelector(state => state.data.currentSetup)
   const setups = useSelector(state => state.data.setups)
   const loading = useSelector(state => state.data.status.loading)
+  const currentSetup = useSelector(state => state.data.currentSetup)
 
   /**
    * Sorting
@@ -36,11 +36,32 @@ export default function Filter(props) {
   }
 
   /**
+   * Tags
+   */
+  const initialTags = useSelector(state => state.data.tags)
+  const [selectedTags, setSelectedTags] = useState(initialTags)
+
+  const handleTags = (tag) => {
+    if (selectedTags) {
+      if (selectedTags.includes(tag)) {
+        setSelectedTags(selectedTags.filter((thisTag) => thisTag !== tag))
+      } else {
+        setSelectedTags([...selectedTags, tag])
+      }
+    } else {
+      setSelectedTags([tag])
+    }
+  }
+
+  /**
    * Submit
    */
   const handleSubmit = () => {
-    if (sort.by !== initialSort.by || sort.order !== initialSort.order) {
-      dispatch(updateFilters({sort})).then((response) => {
+    const compSelectedTags = JSON.stringify(selectedTags ? [...selectedTags].sort() : [])
+    const compInitialTags = JSON.stringify(initialTags ? [...initialTags].sort() : [])
+
+    if (sort.by !== initialSort.by || sort.order !== initialSort.order || compSelectedTags !== compInitialTags) {
+      dispatch(updateFilters({sort, selectedTags})).then((response) => {
         if (response.error) {
           console.log(response.error.message)
         } else {
@@ -86,6 +107,27 @@ export default function Filter(props) {
               </div>
             </div>
           </div>
+
+          { tags && tags.length > 0 &&
+            <div className='c-section c-section-tags c-filter-tags'>
+              <div className='c-section__header'>
+                <div className='c-section__header-name'>
+                  tags
+                </div>
+              </div>
+              <div className='c-section__content'>
+                <div className='c-section__line'>
+                  {tags.map((tag) => { 
+                    let tagClass = `c-section-tags__item${selectedTags && selectedTags.includes(tag) ? ' c-section-tags__item--active' : ''}`
+                    
+                    return (
+                      <div key={tag} onClick={() => handleTags(tag)} className={tagClass}>{tag}</div>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
+          }
         </div>
         <div className='c-nav'>
           <div className='c-nav-item'>

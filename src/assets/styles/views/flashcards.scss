@@ -44,6 +44,17 @@
  * List
  */
 
+.c-flashcards {
+  .c-header-text {
+    padding: 5px 0 0;
+
+    span {
+      display: inline-block;
+      padding: 0 5px 0 0;
+    }
+  }
+}
+
 .c-flashcards-list {
   padding: 0 0 40px;
 }

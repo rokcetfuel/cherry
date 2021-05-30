@@ -344,7 +344,7 @@ export const removeFlashcard = createAsyncThunk(
 
 export const updateFilters = createAsyncThunk(
   'data/updateFilters',
-  async ({sort}, {getState}) => {
+  async ({sort, selectedTags}, {getState}) => {
     const state = getState()
     const uid = state.auth.user.uid
     const currentSetup = state.data.currentSetup
@@ -372,7 +372,8 @@ export const updateFilters = createAsyncThunk(
 
     return {
       setups: setups,
-      flashcards: flashcards
+      flashcards: flashcards,
+      tags: selectedTags
     }
   }
 )
@@ -392,12 +393,16 @@ export const dataSlice = createSlice({
     },
     currentSetup: null,
     setups: null,
-    flashcards: null
+    flashcards: null,
+    tags: null
   },
 
   reducers: {
     cleanDataError: (state) => {
       state.status.error = null
+    },
+    updateTags: (state, action) => {
+      state.tags = action.payload
     }
   },
 
@@ -450,6 +455,7 @@ export const dataSlice = createSlice({
         state.currentSetup = currentSetup
         state.setups = setups
         state.flashcards = null
+        state.tags = null
       }
     },
     [createSetup.rejected]: (state, { error }) => {
@@ -469,6 +475,7 @@ export const dataSlice = createSlice({
       state.status.loading = false
       state.currentSetup = currentSetup
       state.flashcards = flashcards
+      state.tags = null
     },
     [switchSetup.rejected]: (state, { error }) => {
       state.status.loading = false
@@ -510,6 +517,7 @@ export const dataSlice = createSlice({
       state.setups = setups
       state.currentSetup = currentSetup
       state.flashcards = flashcards
+      state.tags = null
     },
     [removeSetup.rejected]: (state, { error }) => {
       state.status.error = error.message
@@ -585,10 +593,11 @@ export const dataSlice = createSlice({
       state.status.error = null
     },
     [updateFilters.fulfilled]: (state, { payload }) => {
-      const { setups, flashcards } = payload
+      const { setups, flashcards, tags } = payload
       state.status.loading = false
       state.flashcards = flashcards
       state.setups = setups
+      state.tags = tags
     },
     [updateFilters.rejected]: (state, { error }) => {
       state.status.loading = false
@@ -597,5 +606,5 @@ export const dataSlice = createSlice({
   }
 })
 
-export const { cleanDataError } = dataSlice.actions
+export const { cleanDataError, updateTags } = dataSlice.actions
 export default dataSlice.reducer
